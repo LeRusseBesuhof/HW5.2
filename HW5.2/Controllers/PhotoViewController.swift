@@ -1,29 +1,19 @@
-//
-//  PhotoViewController.swift
-//  HW5.2
-//
-//  Created by Павел Градов on 13.04.2024.
-//
-
 import UIKit
 
 class PhotoViewController: UIViewController {
 
+    lazy var image : String = ""
+    
+    private lazy var imageView : UIImageView = {
+        $0.image = UIImage(named: image)
+        $0.contentMode = .scaleAspectFit
+        return $0
+    }(UIImageView(frame: CGRect(x: 0, y: view.frame.height / 3, width: view.frame.width, height: view.frame.height / 3)))
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
+        view.backgroundColor = .white
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        view.addSubview(imageView)
     }
-    */
-
 }

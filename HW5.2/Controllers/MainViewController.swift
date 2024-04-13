@@ -1,14 +1,14 @@
 import UIKit
 
-class MainVC: UIViewController {
+class MainViewController: UIViewController {
 
     private lazy var tableData = VehicleGroup.mockData()
     
     private lazy var vehicleTable : UITableView = {
-        $0.register(VehicleCell.self, forCellReuseIdentifier: "engine")
+        $0.register(VehiclePageCell.self, forCellReuseIdentifier: "engine")
         $0.dataSource = self
         $0.delegate = self
-        // $0.separatorStyle = .none
+        $0.separatorStyle = .none
         return $0
     }(UITableView(frame: view.frame))
     
@@ -19,33 +19,40 @@ class MainVC: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         title = "Vehicles"
         
-        navigationController?.navigationItem.title = ""
+        navigationItem.backButtonTitle = ""
         
         view.addSubview(vehicleTable)
     }
 }
 
-extension MainVC : UITableViewDataSource {
+extension MainViewController : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         tableData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "engine", for: indexPath) as? VehicleCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "engine", for: indexPath) as? VehiclePageCell else { return UITableViewCell() }
         
         cell.setData(vehicle: tableData[indexPath.row])
         cell.selectionStyle = .none
         
+        cell.completion = { [weak self] in
+            guard let self = self else { return }
+            
+            let vehicleVC = VehicleViewController()
+            vehicleVC.vehicleData = tableData[indexPath.row]
+            
+            navigationController?.pushViewController(vehicleVC, animated: true)
+        }
         return cell
     }
 }
 
-extension MainVC : UITableViewDelegate {
+extension MainViewController : UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        view.frame.width
+        view.frame.width - 24
     }
 }

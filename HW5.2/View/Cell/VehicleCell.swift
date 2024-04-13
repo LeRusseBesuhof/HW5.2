@@ -1,23 +1,31 @@
-//
-//  VehicleCell.swift
-//  HW5.2
-//
-//  Created by Павел Градов on 13.04.2024.
-//
-
 import UIKit
 
-class VehicleCell: UITableViewCell {
+final class VehicleCell: UITableViewCell {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
-
+    
+    private lazy var vehicleImage : UIImageView = {
+        $0.layer.cornerRadius = 20
+        $0.contentMode = .scaleAspectFill
+        $0.clipsToBounds = true
+        return $0
+    }(UIImageView(frame: CGRect(x: 30, y: 15, width: frame.width - 60, height: 201)))
+    
+    override func prepareForReuse() {
+        vehicleImage.image = nil
+    }
+    
+    func setMyData(image: String) -> Void {
+        backgroundColor = .cellWhite
+        clipsToBounds = true
+        vehicleImage.image = UIImage(named: image)
+        
+        addSubview(vehicleImage)
+    }
 }

@@ -1,6 +1,6 @@
 import UIKit
 
-final class VehicleCell: UITableViewCell {
+final class VehiclePageCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -36,7 +36,7 @@ final class VehicleCell: UITableViewCell {
     private lazy var vehicleDescription : UILabel = AppUI.createLabel(
         textColor: .white,
         textAlignment: .left,
-        rect: CGRect(x: 20, y: vehicleName.frame.maxY + 4, width: mainImageView.bounds.width - 40, height: 51),
+        rect: CGRect(x: 20, y: vehicleName.frame.maxY + 4, width: mainImageView.bounds.width - 40, height: 60),
         font: UIFont.systemFont(ofSize: 14),
         numberOfLines: 3)
     
@@ -56,13 +56,20 @@ final class VehicleCell: UITableViewCell {
         $0.layer.cornerRadius = 25
         $0.backgroundColor = .black
         return $0
-    }(UIButton(frame: CGRect(x: 25, y: imageStack.frame.maxY + 17, width: groupView.bounds.width - 50, height: 49), primaryAction: UIAction(handler: {
-        [weak self] _ in
-        guard let self = self else { return }
-        self.completion?()
-    })))
+    }(UIButton(
+        frame: CGRect(x: 25, y: imageStack.frame.maxY + 17, width: groupView.bounds.width - 50, height: 49),
+        primaryAction: UIAction(handler: { [weak self] _ in
+            guard let self = self else { return }
+            self.completion?()
+        })))
     
     var completion : ( () -> Void )?
+    
+    override func prepareForReuse() {
+        mainImageView.image = nil
+        vehicleName.text = nil
+        vehicleDescription.text = nil
+    }
     
     func setData(vehicle v: VehicleGroup) -> Void {
         
