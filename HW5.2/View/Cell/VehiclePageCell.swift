@@ -25,19 +25,19 @@ final class VehiclePageCell: UITableViewCell {
         $0.contentMode = .scaleAspectFill
         $0.clipsToBounds = true
         return $0
-    }(UIImageView(frame: CGRect(x: 25, y: 15, width: groupView.bounds.width - 50, height: 163)))
+    }(UIImageView(frame: CGRect(x: 25, y: 15, width: groupView.bounds.width - 50, height: groupView.bounds.height / 2 - 22)))
     
     private lazy var vehicleName : UILabel = AppUI.createLabel(
         textColor: .white,
         textAlignment: .left,
-        rect: CGRect(x: 20, y: 70, width: mainImageView.bounds.width - 40, height: 30),
+        rect: CGRect(x: 20, y: mainImageView.bounds.height / 5 * 2, width: mainImageView.bounds.width - 40, height: 24),
         font: UIFont.systemFont(ofSize:30, weight: .heavy))
         
     private lazy var vehicleDescription : UILabel = AppUI.createLabel(
         textColor: .white,
         textAlignment: .left,
-        rect: CGRect(x: 20, y: vehicleName.frame.maxY + 4, width: mainImageView.bounds.width - 40, height: 60),
-        font: UIFont.systemFont(ofSize: 14),
+        rect: CGRect(x: 20, y: vehicleName.frame.maxY, width: mainImageView.bounds.width - 40, height: 60),
+        font: UIFont.systemFont(ofSize: 12),
         numberOfLines: 3)
     
     private lazy var imageStack : UIStackView = {
@@ -47,7 +47,7 @@ final class VehiclePageCell: UITableViewCell {
         $0.alignment = .center
         $0.distribution = .fillEqually
         return $0
-    }(UIStackView(frame: CGRect(x: 25, y: mainImageView.frame.maxY + 12, width: groupView.bounds.width - 50, height: 99)))
+    }(UIStackView(frame: CGRect(x: 25, y: mainImageView.frame.maxY + 10, width: groupView.bounds.width - 50, height: (mainImageView.bounds.width - 24) / 3)))
     
     private lazy var showButton : UIButton = {
         $0.setTitle("show details", for: .normal)
@@ -57,7 +57,7 @@ final class VehiclePageCell: UITableViewCell {
         $0.backgroundColor = .black
         return $0
     }(UIButton(
-        frame: CGRect(x: 25, y: imageStack.frame.maxY + 17, width: groupView.bounds.width - 50, height: 49),
+        frame: CGRect(x: 25, y: imageStack.frame.maxY + 10, width: groupView.bounds.width - 50, height: 49),
         primaryAction: UIAction(handler: { [weak self] _ in
             guard let self = self else { return }
             self.completion?()

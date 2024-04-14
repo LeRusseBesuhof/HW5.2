@@ -7,8 +7,9 @@ class PhotoViewController: UIViewController {
     private lazy var imageView : UIImageView = {
         $0.image = UIImage(named: image)
         $0.contentMode = .scaleAspectFit
+        $0.clipsToBounds = true
         return $0
-    }(UIImageView(frame: CGRect(x: 0, y: view.frame.height / 3, width: view.frame.width, height: view.frame.height / 3)))
+    }(UIImageView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)))
     
     override func viewDidLoad() {
         super.viewDidLoad()
